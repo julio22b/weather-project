@@ -19,7 +19,7 @@ let globalData;
 
 async function getWeather() {
     const response = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${input.value}&APPID=80d3770f43e41ef86755eb8fd951799b`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${input.value}&APPID=80d3770f43e41ef86755eb8fd951799b`,
         { mode: 'cors' },
     );
     const data = await response.json();
