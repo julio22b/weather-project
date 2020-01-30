@@ -13,17 +13,21 @@ const feelsLike = document.querySelector('.feels-like');
 const clouds = document.querySelector('.clouds');
 const weatherContainer = document.querySelector('.weather-info');
 const celFarenBtns = document.querySelectorAll('.buttons > button');
+const blanket = document.querySelector('.blanket');
 const today = new Date();
 
 let globalData;
 
 async function getWeather() {
+    blanket.classList.add('active-blanket');
+
     const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${input.value}&APPID=80d3770f43e41ef86755eb8fd951799b`,
         { mode: 'cors' },
     );
     const data = await response.json();
     globalData = data;
+    blanket.classList.remove('active-blanket');
     populateParas(data);
     return data;
 }
@@ -51,32 +55,32 @@ celFarenBtns.forEach(btn => {
 });
 
 function populateParas(data, deg = 'celsius') {
-    const celsius = (data.main.temp - 273.15).toFixed(2);
-    const faren = (celsius * (9 / 5) + 32).toFixed(2);
+    const celsius = Math.round(data.main.temp - 273.15);
+    const faren = Math.round(celsius * (9 / 5) + 32);
 
-    const minCelsius = (data.main.temp_min - 273.15).toFixed(2);
-    const minFaren = (celsius * (9 / 5) + 32).toFixed(2);
+    const minCelsius = Math.round(data.main.temp_min - 273.15);
+    const minFaren = Math.round(celsius * (9 / 5) + 32);
 
-    const maxCelsius = (data.main.temp_max - 273.15).toFixed(2);
-    const maxFaren = (celsius * (9 / 5) + 32).toFixed(2);
+    const maxCelsius = Math.round(data.main.temp_max - 273.15);
+    const maxFaren = Math.round(celsius * (9 / 5) + 32);
 
-    const feelsLikeCelsius = (data.main.feels_like - 273.15).toFixed(2);
-    const feelsLikeFaren = (celsius * (9 / 5) + 32).toFixed(2);
+    const feelsLikeCelsius = Math.round(data.main.feels_like - 273.15);
+    const feelsLikeFaren = Math.round(celsius * (9 / 5) + 32);
     console.log(data);
     header.textContent = `${data.name}, ${data.sys.country}`;
     humidity.textContent = `Humidity: ${data.main.humidity}%`;
     pressure.textContent = `Pressure: ${data.main.pressure} hPa`;
     wind.textContent = `Wind: ${data.wind.speed} Km/h`;
     if (deg === 'celsius') {
-        temp.textContent = `${celsius} °C`;
+        temp.textContent = `${celsius}°C`;
         minTemp.textContent = `${minCelsius}`;
         maxTemp.textContent = `${maxCelsius}`;
         feelsLike.textContent = `Feels like: ${feelsLikeCelsius}°C`;
     } else {
-        temp.textContent = `${faren} °C`;
+        temp.textContent = `${faren}°F`;
         minTemp.textContent = `${minFaren}`;
         maxTemp.textContent = `${maxFaren}`;
-        feelsLike.textContent = `Feels like: ${feelsLikeFaren}°C`;
+        feelsLike.textContent = `Feels like: ${feelsLikeFaren}°F`;
     }
 
     clouds.textContent = `Cloudiness: ${data.clouds.all}%`;
