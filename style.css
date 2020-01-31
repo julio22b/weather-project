@@ -13,9 +13,11 @@ html {
 }
 
 body {
-    background: url(img/ibu-photographer-nQFOr2WJDXY-unsplash.jpg);
+    background-image: url(img/ibu-photographer-nQFOr2WJDXY-unsplash.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-blend-mode: overlay;
+    background-color: rgba(0, 0, 0, 1);
 }
 
 form {
@@ -68,7 +70,7 @@ form img {
     padding: 0.5em 0;
     margin: 0.5em 0;
     font-size: 3rem;
-    border-bottom: 2px solid rgba(230, 230, 230, 0.3);
+    border-bottom: 2px solid rgb(255, 255, 255);
 }
 
 .weather-info p {
